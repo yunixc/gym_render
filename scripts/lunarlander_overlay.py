@@ -180,24 +180,25 @@ def _prepare_background(frame: np.ndarray) -> np.ndarray:
     return np.clip(img, 0, 255).astype(np.uint8)
 
 
-def _step_alpha_colors(
+def _segment_colours(
     base_rgba: np.ndarray,
     progress: np.ndarray,
-    alpha_start: float = 0.1,
-    alpha_end: float = 0.9,
-    scale: float = 1.0,
+    alpha_scale: float,
+    shade_strength: float = 0.55,
+    alpha_range: Tuple[float, float] = (0.05, 0.5),
 ) -> np.ndarray:
-    """Return base colour with per-segment alpha ramp from alpha_start → alpha_end.
+    """Compute RGBA for each segment by shading and fading based on progress."""
 
-    - progress 0.0 => alpha ≈ alpha_start (more transparent)
-    - progress 1.0 => alpha ≈ alpha_end (less transparent)
-    - scale multiplies the alpha (clipped to [0, 1])
-    """
     p = np.clip(progress, 0.0, 1.0)
-    alpha = alpha_start + (alpha_end - alpha_start) * p
-    alpha = np.clip(alpha * scale, 0.0, 1.0)
+
+    alpha = alpha_range[0] + (alpha_range[1] - alpha_range[0]) * p
+    alpha = np.clip(alpha * alpha_scale, 0.0, 1.0)
+
     base_rgb = np.broadcast_to(base_rgba[:3], (p.shape[0], 3))
-    return np.concatenate([base_rgb, alpha[:, None]], axis=1)
+    shade = 1.0 - shade_strength * (1.0 - p[:, None])
+    rgb = np.clip(base_rgb * shade, 0.0, 1.0)
+
+    return np.concatenate([rgb, alpha[:, None]], axis=1)
 
 
 def _smooth_series(data: np.ndarray, window: int = 5) -> np.ndarray:
@@ -404,7 +405,7 @@ def save_overlay(
 
         segments = np.stack([np.column_stack([xs[:-1], ys[:-1]]), np.column_stack([xs[1:], ys[1:]])], axis=1)
         segment_progress = 0.5 * (steps[:-1] + steps[1:])
-        colors = _step_alpha_colors(base_color, segment_progress, alpha_start=0.1, alpha_end=0.9, scale=alpha)
+        colors = _segment_colours(base_color, segment_progress, alpha_scale=alpha)
         colors = np.asarray(colors, dtype=float)
         lc = LineCollection(
             segments,
