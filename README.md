@@ -54,7 +54,7 @@ episode. Toy Text environments render textual frames to `.txt` files.
 
 ### LunarLander trajectory overlay
 
-Generate an overlay of multiple LunarLander trajectories:
+Generate an overlay of multiple random LunarLander trajectories:
 
 ```bash
 python scripts/lunarlander_overlay.py --episodes 20 --max-steps 1000 \
