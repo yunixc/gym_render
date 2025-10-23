@@ -1,0 +1,14 @@
+name: gymnasium
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - swig
+  - numpy
+  - pillow
+  - matplotlib
+  - pip:
+      - gymnasium[classic_control,box2d,mujoco,toy_text]
+      - imageio
+      - imageio-ffmpeg

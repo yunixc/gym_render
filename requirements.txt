@@ -1,0 +1,7 @@
+gymnasium[classic_control,box2d,mujoco,toy_text]
+numpy
+pillow
+imageio
+imageio-ffmpeg
+matplotlib
+glfw

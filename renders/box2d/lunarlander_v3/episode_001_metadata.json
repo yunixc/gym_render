@@ -1,0 +1,13 @@
+{
+  "name": "LunarLander",
+  "env_id": "LunarLander-v3",
+  "group": "box2d",
+  "render_mode": "rgb_array",
+  "default_max_steps": 1000,
+  "description": null,
+  "episode_index": 0,
+  "episode_number": 1,
+  "frame_count": 100,
+  "fps": 50,
+  "steps": 99
+}
