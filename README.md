@@ -1,8 +1,10 @@
-# Gymnasium Rendering Toolkit
+# gym_render
 
 A ready-to-use Conda environment and a small modular codebase designed to capture rendered 
 rollouts for a curated list of Gymnasium environments spanning
 Classic Control, Box2D, Toy Text, and MuJoCo tasks.
+
+> This project builds on top of the Farama Foundation's [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) library.
 
 ## 1. Conda environment
 
@@ -74,6 +76,10 @@ Gymnasium randomise the terrain every episode. If you also set `--action-seed`, 
 actions become reproducible while the terrain stays fixed. Adjust `--line-width`,
 `--alpha`, or the colormap to taste. To visualise a trained policy, adapt the script to
 draw actions from your controller instead of `action_space.sample()`.
+
+<p align="center">
+  <img src="renders/lunarlander_overlay.png" alt="Sample overlay">
+</p>
 
 ### Rendering with a trained controller
 
