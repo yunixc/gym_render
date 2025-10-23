@@ -1,8 +1,7 @@
 # gym_render
 
-A ready-to-use Conda environment and a small modular codebase designed to capture rendered 
-rollouts for a curated list of Gymnasium environments spanning
-Classic Control, Box2D, Toy Text, and MuJoCo tasks.
+A small modular codebase designed to capture rendered rollouts for a curated list of Gymnasium environments
+(Classic Control, Box2D, Toy Text, and MuJoCo).
 
 > This project builds on top of the Farama Foundation's [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) library.
 
@@ -14,13 +13,7 @@ conda activate gymnasium
 python -m pip install -r requirements.txt
 ```
 
-The environment installs Gymnasium with all required extras, MuJoCo, Box2D tooling, and
-ImageIO for recording RGB videos. The `swig` dependency is included so that Box2D builds
-work reliably on fresh systems.
-
-### Alternative: bare pip install
-
-If you prefer to manage Python yourself, install the dependencies listed in `requirements.txt`:
+### Alternative: pip install
 
 ```bash
 python -m venv .venv
@@ -61,7 +54,7 @@ episode. Toy Text environments render textual frames to `.txt` files.
 
 ### LunarLander trajectory overlay
 
-Generate a presentation-friendly overlay of multiple LunarLander trajectories:
+Generate an overlay of multiple LunarLander trajectories:
 
 ```bash
 python scripts/lunarlander_overlay.py --episodes 20 --max-steps 1000 \
@@ -122,10 +115,6 @@ to return a valid action for the underlying Gymnasium space.
 
 ## 5. Notes
 
-- Videos are encoded with `imageio-ffmpeg`. Ensure `ffmpeg` binaries are discoverable on your
-  system (installed automatically when using the provided Conda environment).
-- MuJoCo environments require hardware acceleration for smooth rendering. Consider lowering
-  `--max-steps` if you only need short clips.
 - Frames are zero-padded to the nearest 16×16 macro block before encoding so that FFMPEG
   produces standards-compliant videos without resizing warnings.
 - The trajectory overlay helper relies on Matplotlib. If you are using a custom environment,
