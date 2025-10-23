@@ -1,7 +1,7 @@
 # Gymnasium Rendering Toolkit
 
-This repository provides a ready-to-use Conda environment and a small modular codebase
-designed to capture rendered rollouts for a curated list of Gymnasium environments spanning
+A ready-to-use Conda environment and a small modular codebase designed to capture rendered 
+rollouts for a curated list of Gymnasium environments spanning
 Classic Control, Box2D, Toy Text, and MuJoCo tasks.
 
 ## 1. Conda environment
@@ -62,17 +62,18 @@ episode. Toy Text environments render textual frames to `.txt` files.
 Generate a presentation-friendly overlay of multiple LunarLander trajectories:
 
 ```bash
-python scripts/lunarlander_overlay.py --episodes 50 --max-steps 750 --seed 7 \
-    --output renders/lunarlander_overlay.png --episode-colormap plasma
+python scripts/lunarlander_overlay.py --episodes 20 --max-steps 1000 \
+    --terrain-seed 2 --episode-colormap Grays_r --alpha 0.4 \
+    --output renders/lunarlander_overlay.png
 ```
 
-The script samples random policies, captures their trajectories, and plots smoothed paths on
-a dimmed background. Each episode colour brightens along the trajectory to show temporal
-progress, and the episode index is communicated through the on-figure colourbar. Tune
-`--episode-colormap`, `--line-width`, or `--alpha` for
-different visual styles. Trajectories are clipped to the viewport so nothing spills outside
-the landing area. To visualise a trained policy, adapt the script to draw actions from your
-controller instead of `action_space.sample()`.
+The overlay records the centre of the lander, renders every trail with a
+transparent → opaque gradient, and draws the final spacecraft hull for the last episode.
+Passing `--terrain-seed` recreates the exact same landscape for each run; omit it to let
+Gymnasium randomise the terrain every episode. If you also set `--action-seed`, the sampled
+actions become reproducible while the terrain stays fixed. Adjust `--line-width`,
+`--alpha`, or the colormap to taste. To visualise a trained policy, adapt the script to
+draw actions from your controller instead of `action_space.sample()`.
 
 ### Rendering with a trained controller
 
